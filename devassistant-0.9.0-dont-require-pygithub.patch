@@ -1,0 +1,11 @@
+--- setup.py.orig	2014-06-23 14:07:01.732483012 +0200
++++ setup.py	2014-06-23 14:08:35.870401969 +0200
+@@ -102,7 +102,7 @@
+                                        'devassistant=devassistant.cli.cli_runner:CliRunner.run',
+                                        ]},
+     # PyGithub is in fact optional, but let's keep it here
+-    install_requires=['PyYaml', 'PyGithub>=1.14.2', 'jinja2', 'progress', 'six'],
++    install_requires=['PyYaml', 'jinja2', 'progress', 'six'],
+     setup_requires = [],
+     classifiers = ['Development Status :: 4 - Beta',
+                    'Environment :: Console',

@@ -1,0 +1,13 @@
+--- devassistant/settings.py.orig	2014-06-20 10:42:50.000000000 +0200
++++ devassistant/settings.py	2014-06-23 14:21:15.671789766 +0200
+@@ -37,8 +37,8 @@
+ #   load assistants, the relative path would point in an unwanted location
+ # - command runners should be allowed to rely on this (e.g. if we pass a file from files
+ #   section to Jinja2Runner, we need to make sure it's fullpath)
+-DATA_DIRECTORIES = [os.path.join(os.path.dirname(__file__), 'data'),
+-                    '/usr/local/share/devassistant',
++DATA_DIRECTORIES = ['_DATADIR_DEVASSISTANT',
++                    '_DATADIR_LOCAL_DEVASSISTANT',
+                     os.path.expanduser('~/.devassistant')]
+ if 'DEVASSISTANT_PATH' in os.environ:
+     DATA_DIRECTORIES = [os.path.abspath(p) for p in os.environ['DEVASSISTANT_PATH'].split(':')] +\

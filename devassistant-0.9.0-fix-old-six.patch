@@ -1,0 +1,48 @@
+From 3b6b401491e315059cf486c3f90d0ddab2c61261 Mon Sep 17 00:00:00 2001
+From: Tomas Radej <tradej@redhat.com>
+Date: Thu, 19 Feb 2015 15:19:20 +0100
+Subject: [PATCH] Fixed old six
+
+---
+ devassistant/command_runners.py | 6 +++---
+ devassistant/logger.py          | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/devassistant/command_runners.py b/devassistant/command_runners.py
+index 6433f2a..a36c4e9 100644
+--- a/devassistant/command_runners.py
++++ b/devassistant/command_runners.py
+@@ -1109,14 +1109,14 @@ class NormalizeCommandRunner(CommandRunner):
+             raise exceptions.CommandException('"normalize" expects string input, got {0}'.\
+                 format(to_norm))
+ 
+-        if six.PY2 and isinstance(to_norm, str):
++        if not six.PY3 and isinstance(to_norm, str):
+             to_norm = to_norm.decode('utf8')
+         normalized = unicodedata.normalize('NFKD', to_norm)
+-        if six.PY2:
++        if not six.PY3:
+             normalized = normalized.encode('ascii', 'ignore')
+         normalized = normalized.lstrip('0123456789')
+         badchars = '-+\\|()[]{}<>,./:\'" \t;`!@#$%^&*'
+-        if six.PY2:
++        if not six.PY3:
+             tt = string.maketrans(badchars, '_' * len(badchars))
+         else:
+             tt = str.maketrans(badchars, '_' * len(badchars))
+diff --git a/devassistant/logger.py b/devassistant/logger.py
+index da09eab..6f8f0b4 100644
+--- a/devassistant/logger.py
++++ b/devassistant/logger.py
+@@ -30,7 +30,7 @@ class DevassistantClFormatter(logging.Formatter):
+             settings.LOG_FORMATS_MAP['log_cmd']
+ 
+         record_vars = vars(record)
+-        if six.PY2:
++        if not six.PY3:
+             if isinstance(record_vars['msg'], BaseException):
+                 record_vars['msg'] = record_vars['msg'].message
+             if isinstance(record_vars['msg'], str):
+-- 
+2.1.0
+

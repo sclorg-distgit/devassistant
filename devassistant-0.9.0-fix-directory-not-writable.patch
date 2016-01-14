@@ -1,0 +1,27 @@
+From cb732f42e697e5e89dfd947c844ca911d8260a4a Mon Sep 17 00:00:00 2001
+From: Tomas Radej <tradej@redhat.com>
+Date: Thu, 19 Feb 2015 16:56:05 +0100
+Subject: [PATCH] Fix directory not writable
+
+---
+ devassistant/command_runners.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/devassistant/command_runners.py b/devassistant/command_runners.py
+index a36c4e9..8bbe124 100644
+--- a/devassistant/command_runners.py
++++ b/devassistant/command_runners.py
+@@ -1194,8 +1194,8 @@ class SetupProjectDirCommandRunner(CommandRunner):
+                     os.makedirs(topdir_fullpath)
+ 
+         except OSError as e:
+-            msg = 'Failed to create directory {0}: {1}'.format(args['from'], e.message)
+-            raise CommandException(msg)
++            msg = 'Failed to create directory {0}: {1}'.format(args['from'], e.strerror)
++            raise exceptions.CommandException(msg)
+ 
+         # if contdir == '', then return current dir ('.')
+         c.kwargs[args['contdir_var']] = contdir or '.'
+-- 
+2.1.0
+
